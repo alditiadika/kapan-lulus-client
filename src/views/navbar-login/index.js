@@ -16,7 +16,7 @@ import {
   InputGroupText,
   InputGroup,
   Button,
-  UncontrolledAlert
+  Alert
 } from "reactstrap";
 
 import Loader from "../login/loader";
@@ -72,13 +72,16 @@ class PagesNavbar extends React.Component {
   };
 
   onChangeInput = event => {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
+    this.setState(
+      {
+        [event.target.name]: event.target.value
+      },
+      () => this.props.emptyReport(false)
+    );
   };
   onLoginClick = () => {
     if (this.state.username === "" || this.state.password === "") {
-      this.props.emptyReport();
+      this.props.emptyReport(true);
     } else {
       this.props.refreshRequest(true);
       this.props.login(
@@ -86,7 +89,8 @@ class PagesNavbar extends React.Component {
           username: this.state.username,
           password: this.state.password
         },
-        this.props.refreshRequest
+        this.props.refreshRequest,
+        () => this.props.emptyReport(true)
       );
     }
   };
@@ -195,8 +199,8 @@ class PagesNavbar extends React.Component {
                   </Button>
                 </div>
               </NavbarBrand>
-              {this.state.collapseOpen && (
-                <UncontrolledAlert
+              {this.state.collapseOpen && this.props.isEmpty && (
+                <Alert
                   style={{ marginLeft: "200px", width: "500px" }}
                   className="alert-with-icon"
                   color="danger"
@@ -209,7 +213,7 @@ class PagesNavbar extends React.Component {
                   <span>
                     <a href={window.location.hash}>lupa password?</a>
                   </span>
-                </UncontrolledAlert>
+                </Alert>
               )}
               <div className="text-center">
                 {this.state.collapseOpen && (

@@ -1,7 +1,7 @@
 import { type } from "../../redux/auth/types";
 import axios from "axios";
 import configAPI from "../../config/config-api";
-export const login = (dispatch, userData, refreshSetter) => {
+export const login = (dispatch, userData, refreshSetter, callback) => {
   axios({
     url: `${configAPI.url}${configAPI.endpoint.login}`,
     method: "post",
@@ -21,6 +21,7 @@ export const login = (dispatch, userData, refreshSetter) => {
           payload: res.data
         });
       } else {
+        callback();
         dispatch({
           type: type.error,
           payload: res.data
@@ -28,6 +29,7 @@ export const login = (dispatch, userData, refreshSetter) => {
       }
     })
     .catch(err => {
+      callback();
       refreshSetter(false);
       dispatch({
         type: type.error,
@@ -37,7 +39,8 @@ export const login = (dispatch, userData, refreshSetter) => {
 };
 
 export const mapDispatchToProps = dispatch => ({
-  login: (payload, refreshSetter) => login(dispatch, payload, refreshSetter)
+  login: (payload, refreshSetter, callback) =>
+    login(dispatch, payload, refreshSetter, callback)
 });
 export const mapStateToProps = state => ({
   auth: state.auth
