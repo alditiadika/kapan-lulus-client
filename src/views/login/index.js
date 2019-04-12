@@ -40,7 +40,7 @@ class RegisterPage extends React.Component {
     e.preventDefault();
     this.setState({
       [stateName]: index
-    });
+    })
   };
   render() {
     if (this.state.isEmpty) {
@@ -68,7 +68,7 @@ class RegisterPage extends React.Component {
                 <Alert
                   style={{ marginLeft: "200px", width: "800px" }}
                   className="alert-with-icon"
-                  color="danger"
+                  color="info"
                 >
                   <span
                     data-notify="icon"
@@ -76,7 +76,7 @@ class RegisterPage extends React.Component {
                   />
                   <span>Username atau password tidak cocok, </span>
                   <span>
-                    <a href={window.location.hash}>lupa password?</a>
+                    <a style={{ color:'red' }} href={window.location.hash}>lupa password?</a>
                   </span>
                 </Alert>
               )}
