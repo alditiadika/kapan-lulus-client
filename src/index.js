@@ -10,6 +10,8 @@ import { routes } from "./routes";
 import store from "./store";
 ReactDOM.render(
   <Provider store={store}>
+    {/*delete account in localStorage at first or browser reload*/}
+    {localStorage.clear()}
     <BrowserRouter>
       <Switch>
         {routes.map((Item, i) => (
