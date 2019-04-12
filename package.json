@@ -1,0 +1,74 @@
+{
+  "name": "kapan-lulus-client-2",
+  "version": "2.0.0",
+  "description": "Second Version Template Frontend Kapan Lulus (template BLK Design System by Creative Tim)",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alditiadika/kapan-lulus-client-2.git"
+  },
+  "author": "Randika Alditia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alditiadika/kapan-lulus-client-2/issues"
+  },
+  "homepage": "https://github.com/alditiadika/kapan-lulus-client-2#readme",
+  "keywords": [
+    "react",
+    "reactjs",
+    "blk",
+    "blk-react",
+    "design",
+    "design-react",
+    "system",
+    "system-react",
+    "design-system",
+    "design-system-react",
+    "blk-design",
+    "blk-design-react",
+    "blk-system",
+    "blk-system-react",
+    "blk-design-system",
+    "blk-design-system-react"
+  ],
+  "dependencies": {
+    "axios": "^0.18.0",
+    "chart.js": "2.7.3",
+    "classnames": "2.2.6",
+    "moment": "2.24.0",
+    "node-sass": "4.11.0",
+    "nouislider": "13.1.1",
+    "perfect-scrollbar": "1.4.0",
+    "react": "16.8.3",
+    "react-bootstrap-switch": "15.5.3",
+    "react-chartjs-2": "2.7.4",
+    "react-datetime": "2.16.3",
+    "react-dom": "16.8.3",
+    "react-loadable": "^5.5.0",
+    "react-redux": "^7.0.1",
+    "react-router-dom": "4.3.1",
+    "react-scripts": "2.1.5",
+    "reactstrap": "7.1.0",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
+  },
+  "scripts": {
+    "start": "PORT=9090 react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "clean-start": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
+    "compile-sass": "node-sass src/assets/scss/blk-design-system-react.scss src/assets/css/blk-design-system-react.css",
+    "minify-sass": "node-sass src/assets/scss/blk-design-system-react.scss src/assets/css/blk-design-system-react.min.css --output-style compressed",
+    "map-sass": "node-sass src/assets/scss/blk-design-system-react.scss src/assets/css/blk-design-system-react.css --source-map true"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
