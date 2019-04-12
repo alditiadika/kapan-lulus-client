@@ -21,7 +21,7 @@ import {
   NavItem,
   NavLink,
   UncontrolledTooltip,
-  UncontrolledAlert
+  Alert
 } from "reactstrap";
 
 // core components
@@ -43,13 +43,19 @@ class RegisterPage extends React.Component {
     });
   };
   render() {
+    if (this.state.isEmpty) {
+      setTimeout(() => {
+        this.setState({ isEmpty: false });
+      }, 10000);
+    }
     return (
       <>
         <Navbar
           login={this.props.login}
           isNeedRefresh={this.state.isNeedRefresh}
           refreshRequest={status => this.setState({ isNeedRefresh: status })}
-          emptyReport={() => this.setState({ isEmpty: true })}
+          emptyReport={status => this.setState({ isEmpty: status })}
+          isEmpty={this.state.isEmpty}
         />
         <div className="wrapper">
           <div className="page-header">
@@ -59,7 +65,7 @@ class RegisterPage extends React.Component {
               {((this.props.auth.status !== null &&
                 this.props.auth.status !== 200) ||
                 this.state.isEmpty) && (
-                <UncontrolledAlert
+                <Alert
                   style={{ marginLeft: "200px", width: "800px" }}
                   className="alert-with-icon"
                   color="danger"
@@ -72,7 +78,7 @@ class RegisterPage extends React.Component {
                   <span>
                     <a href={window.location.hash}>lupa password?</a>
                   </span>
-                </UncontrolledAlert>
+                </Alert>
               )}
               <Container>
                 <Row>
