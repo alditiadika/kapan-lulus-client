@@ -132,7 +132,7 @@ export default class extends React.Component {
             <img
               alt="..."
               className="img-fluid rounded-circle shadow-lg"
-              src={require("assets/img/mike.jpg")}
+              src={require("assets/img/james.jpg")}
               style={{ width: "20px", height: "20px" }}
             />
           </NavLink>

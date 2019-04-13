@@ -19,28 +19,26 @@ class Footer extends React.Component {
         <Container>
           <Row>
             <Col md="3">
-              <h1 className="title">KAPAN• Lulus</h1>
+              <h1 className="title">
+                {" "}
+                <a href="/">KAPAN• Lulus</a>
+              </h1>
             </Col>
             <Col md="3">
               <Nav>
                 <NavItem>
-                  <NavLink to="/" tag={Link}>
-                    Home
-                  </NavLink>
-                </NavItem>
-                <NavItem>
                   <NavLink to="/landing-page" tag={Link}>
-                    Landing
+                    Kebijakan Privasi
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink to="/register-page" tag={Link}>
-                    Register
+                    Kebijakan Hak Cipta
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink to="/profile-page" tag={Link}>
-                    Profile
+                    Syarat dan Ketentuan
                   </NavLink>
                 </NavItem>
               </Nav>
@@ -48,19 +46,15 @@ class Footer extends React.Component {
             <Col md="3">
               <Nav>
                 <NavItem>
-                  <NavLink href="https://creative-tim.com/contact-us?ref=blkdsr-footer">
-                    Contact Us
-                  </NavLink>
+                  <NavLink href="/about">Tentang</NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink href="https://creative-tim.com/about-us?ref=blkdsr-footer">
-                    About Us
+                    Layanan
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="https://creative-tim.com/blog?ref=blkdsr-footer">
-                    Blog
-                  </NavLink>
+                  <NavLink href="/help">Bantuan</NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink href="https://opensource.org/licenses/MIT">
