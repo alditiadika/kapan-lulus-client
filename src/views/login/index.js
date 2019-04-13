@@ -25,10 +25,10 @@ import {
 } from "reactstrap";
 
 // core components
-import Navbar from "../navbar-login";
-import Footer from "../footer";
+import Navbar from "../utils/navbar-login";
+import Footer from "../utils/footer";
 import { mapStateToProps, mapDispatchToProps } from "./actions";
-import Loader from "./loader";
+import Loader from "../utils/spinner";
 
 class RegisterPage extends React.Component {
   state = {
@@ -40,7 +40,7 @@ class RegisterPage extends React.Component {
     e.preventDefault();
     this.setState({
       [stateName]: index
-    })
+    });
   };
   render() {
     if (this.state.isEmpty) {
@@ -66,9 +66,12 @@ class RegisterPage extends React.Component {
                 this.props.auth.status !== 200) ||
                 this.state.isEmpty) && (
                 <Alert
-                  style={{ marginLeft: "200px", width: "800px" }}
+                  style={{
+                    margin: "auto",
+                    width: "500px",
+                    marginBottom: "40px"
+                  }}
                   className="alert-with-icon"
-                  color="info"
                 >
                   <span
                     data-notify="icon"
@@ -76,7 +79,9 @@ class RegisterPage extends React.Component {
                   />
                   <span>Username atau password tidak cocok, </span>
                   <span>
-                    <a style={{ color:'red' }} href={window.location.hash}>lupa password?</a>
+                    <a style={{ color: "red" }} href={window.location.hash}>
+                      lupa password?
+                    </a>
                   </span>
                 </Alert>
               )}
