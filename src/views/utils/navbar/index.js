@@ -5,9 +5,6 @@ import {
   Collapse,
   NavbarBrand,
   Navbar,
-  NavItem,
-  NavLink,
-  Nav,
   Container,
   Row,
   Input,
@@ -17,14 +14,19 @@ import {
   Col
 } from "reactstrap";
 
+import RightOptions from "./right-options";
+
 class PagesNavbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       collapseOpen: false,
-      color: "bg-success"
+      color: "navbar-transparent",
+      iconTabs: 1,
+      nameShow: false
     };
   }
+
   componentDidMount() {
     window.addEventListener("scroll", this.changeColor);
   }
@@ -37,29 +39,34 @@ class PagesNavbar extends React.Component {
       document.body.scrollTop > 99
     ) {
       this.setState({
-        color: "bg-info"
+        color: /*"navbar-transparent"*/ "bg-success" /*"bg-success"*/
       });
     } else if (
       document.documentElement.scrollTop < 100 ||
       document.body.scrollTop < 100
     ) {
       this.setState({
-        color: "bg-success"
+        color: "navbar-transparent"
       });
     }
   };
   toggleCollapse = () => {
     document.documentElement.classList.toggle("nav-open");
+    console.log("masuk");
     this.setState({
-      collapseOpen: !this.state.collapseOpen
+      collapseOpen: !this.state.collapseOpen,
+      nameShow: true
     });
   };
   onCollapseExiting = () => {
+    console.log("tutup");
     this.setState({
-      collapseOut: "collapsing-out"
+      collapseOut: "collapsing-out",
+      nameShow: false
     });
   };
   onCollapseExited = () => {
+    console.log("exited");
     this.setState({
       collapseOut: ""
     });
@@ -133,44 +140,7 @@ class PagesNavbar extends React.Component {
                 </Col>
               </Row>
             </div>
-            <Nav navbar>
-              <NavItem className="p-0">
-                <NavLink
-                  data-placement="bottom"
-                  href="https://twitter.com/CreativeTim"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  title="Follow us on Twitter"
-                >
-                  <i className="fab fa-twitter" />
-                  <p className="d-lg-none d-xl-none">Twitter</p>
-                </NavLink>
-              </NavItem>
-              <NavItem className="p-0">
-                <NavLink
-                  data-placement="bottom"
-                  href="https://www.facebook.com/CreativeTim"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  title="Like us on Facebook"
-                >
-                  <i className="fab fa-facebook-square" />
-                  <p className="d-lg-none d-xl-none">Facebook</p>
-                </NavLink>
-              </NavItem>
-              <NavItem className="p-0">
-                <NavLink
-                  data-placement="bottom"
-                  href="https://www.instagram.com/CreativeTimOfficial"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  title="Follow us on Instagram"
-                >
-                  <i className="fab fa-instagram" />
-                  <p className="d-lg-none d-xl-none">Instagram</p>
-                </NavLink>
-              </NavItem>
-            </Nav>
+            <RightOptions />
           </Collapse>
         </Container>
       </Navbar>

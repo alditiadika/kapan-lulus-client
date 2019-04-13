@@ -42,6 +42,7 @@ class RegisterPage extends React.Component {
       [stateName]: index
     });
   };
+
   render() {
     if (this.state.isEmpty) {
       setTimeout(() => {
