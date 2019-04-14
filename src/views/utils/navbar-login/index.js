@@ -19,7 +19,7 @@ import {
   Alert
 } from "reactstrap";
 
-import Loader from "../login/loader";
+import Loader from "../../utils/spinner";
 
 class PagesNavbar extends React.Component {
   constructor(props) {
@@ -67,6 +67,7 @@ class PagesNavbar extends React.Component {
   };
   onCollapseExited = () => {
     this.setState({
+      collapseOpen: false,
       collapseOut: ""
     });
   };
@@ -200,18 +201,16 @@ class PagesNavbar extends React.Component {
                 </div>
               </NavbarBrand>
               {this.state.collapseOpen && this.props.isEmpty && (
-                <Alert
-                  style={{ marginLeft: "200px", width: "500px" }}
-                  className="alert-with-icon"
-                  color="danger"
-                >
+                <Alert style={{ margin: "auto" }} className="alert-with-icon">
                   <span
                     data-notify="icon"
                     className="tim-icons icon-support-17"
                   />
                   <span>Username atau password tidak cocok, </span>
                   <span>
-                    <a href={window.location.hash}>lupa password?</a>
+                    <a style={{ color: "red" }} href={window.location.hash}>
+                      lupa password?
+                    </a>
                   </span>
                 </Alert>
               )}

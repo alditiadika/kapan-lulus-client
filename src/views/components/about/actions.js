@@ -1,6 +1,6 @@
-import { type } from "../../redux/auth/types";
+import { type } from "../../../redux/auth/types";
 import axios from "axios";
-import configAPI from "../../config/config-api";
+import configAPI from "../../../config/config-api";
 export const login = (dispatch, userData, refreshSetter, callback) => {
   axios({
     url: `${configAPI.url}${configAPI.endpoint.login}`,

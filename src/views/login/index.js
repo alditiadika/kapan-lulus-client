@@ -25,23 +25,29 @@ import {
 } from "reactstrap";
 
 // core components
-import Navbar from "../navbar-login";
-import Footer from "../footer";
+import Navbar from "../utils/navbar-login";
+import Footer from "../utils/footer";
 import { mapStateToProps, mapDispatchToProps } from "./actions";
-import Loader from "./loader";
+import Loader from "../utils/spinner";
+import First from "./modal-register/first";
+// import { isEmpty } from '../../validator'
 
 class RegisterPage extends React.Component {
   state = {
     iconTabs: 1,
     isNeedRefresh: false,
-    isEmpty: false
+    isEmpty: false,
+    modalOpen: {
+      first: false
+    }
   };
   toggleTabs = (e, stateName, index) => {
     e.preventDefault();
     this.setState({
       [stateName]: index
-    })
+    });
   };
+
   render() {
     if (this.state.isEmpty) {
       setTimeout(() => {
@@ -50,6 +56,15 @@ class RegisterPage extends React.Component {
     }
     return (
       <>
+        {this.state.modalOpen.first && (
+          <First
+            close={() =>
+              this.setState({
+                modalOpen: { ...this.state.modalOpen, first: false }
+              })
+            }
+          />
+        )}
         <Navbar
           login={this.props.login}
           isNeedRefresh={this.state.isNeedRefresh}
@@ -66,9 +81,12 @@ class RegisterPage extends React.Component {
                 this.props.auth.status !== 200) ||
                 this.state.isEmpty) && (
                 <Alert
-                  style={{ marginLeft: "200px", width: "800px" }}
+                  style={{
+                    margin: "auto",
+                    width: "500px",
+                    marginBottom: "40px"
+                  }}
                   className="alert-with-icon"
-                  color="info"
                 >
                   <span
                     data-notify="icon"
@@ -76,7 +94,9 @@ class RegisterPage extends React.Component {
                   />
                   <span>Username atau password tidak cocok, </span>
                   <span>
-                    <a style={{ color:'red' }} href={window.location.hash}>lupa password?</a>
+                    <a style={{ color: "red" }} href={window.location.hash}>
+                      lupa password?
+                    </a>
                   </span>
                 </Alert>
               )}
@@ -213,7 +233,19 @@ class RegisterPage extends React.Component {
                         </Form>
                       </CardBody>
                       <CardFooter>
-                        <Button className="mr-5" color="info" size="lg">
+                        <Button
+                          onClick={() =>
+                            this.setState({
+                              modalOpen: {
+                                ...this.state.modalOpen,
+                                first: true
+                              }
+                            })
+                          }
+                          className="mr-5"
+                          color="info"
+                          size="lg"
+                        >
                           Daftar
                         </Button>
                         <Button
