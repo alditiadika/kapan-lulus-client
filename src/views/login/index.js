@@ -29,12 +29,17 @@ import Navbar from "../utils/navbar-login";
 import Footer from "../utils/footer";
 import { mapStateToProps, mapDispatchToProps } from "./actions";
 import Loader from "../utils/spinner";
+import First from "./modal-register/first";
+// import { isEmpty } from '../../validator'
 
 class RegisterPage extends React.Component {
   state = {
     iconTabs: 1,
     isNeedRefresh: false,
-    isEmpty: false
+    isEmpty: false,
+    modalOpen: {
+      first: false
+    }
   };
   toggleTabs = (e, stateName, index) => {
     e.preventDefault();
@@ -51,6 +56,15 @@ class RegisterPage extends React.Component {
     }
     return (
       <>
+        {this.state.modalOpen.first && (
+          <First
+            close={() =>
+              this.setState({
+                modalOpen: { ...this.state.modalOpen, first: false }
+              })
+            }
+          />
+        )}
         <Navbar
           login={this.props.login}
           isNeedRefresh={this.state.isNeedRefresh}
@@ -219,7 +233,19 @@ class RegisterPage extends React.Component {
                         </Form>
                       </CardBody>
                       <CardFooter>
-                        <Button className="mr-5" color="info" size="lg">
+                        <Button
+                          onClick={() =>
+                            this.setState({
+                              modalOpen: {
+                                ...this.state.modalOpen,
+                                first: true
+                              }
+                            })
+                          }
+                          className="mr-5"
+                          color="info"
+                          size="lg"
+                        >
                           Daftar
                         </Button>
                         <Button

@@ -23,7 +23,9 @@ class Dashboard extends React.Component {
     return (
       <Fragment>
         <Nav />
-        <FirstRegister />
+        <FirstRegister
+          toggleComponent={status => this.setState({ openFirstModal: status })}
+        />
         <Container>
           <Card>
             <CardBody>
@@ -120,7 +122,9 @@ class Dashboard extends React.Component {
             <Col className="col-sm-4">
               <Card>
                 <CardBody>
-                  <p>Beasiswa Terkini</p>
+                  <p>
+                    <a href="/internship">Beasiswa Terkini</a>
+                  </p>
                   <Carousel />
                   <br />
                   <div className="text-center">
@@ -164,7 +168,9 @@ class FirstRegister extends React.Component {
                   <br />
                   <br />
                   <p>
-                    <Button>Lengkapi Profil</Button>
+                    <Button onClick={() => this.props.toggleComponent(true)}>
+                      Lengkapi Profil
+                    </Button>
                   </p>
                 </div>
               </CardBody>

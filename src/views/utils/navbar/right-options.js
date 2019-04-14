@@ -1,10 +1,19 @@
 import React from "react";
-import { NavItem, NavLink, Nav } from "reactstrap";
+import {
+  NavItem,
+  NavLink,
+  Nav,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  UncontrolledDropdown
+} from "reactstrap";
 import classnames from "classnames";
 export default class extends React.Component {
   state = {
     iconTabs: 1,
-    nameShow: false
+    nameShow: false,
+    arrowClick: false
   };
 
   toggleTabs = (e, stateName, index) => {
@@ -16,6 +25,8 @@ export default class extends React.Component {
 
   render() {
     return (
+      // <Card>
+      //   <CardBody>
       <Nav className="nav-tabs-info" role="tablist" /*tabs*/>
         <NavItem>
           <NavLink
@@ -27,7 +38,7 @@ export default class extends React.Component {
               marginBottom: this.state.nameShow ? "10px" : ""
             }}
             onClick={e => this.toggleTabs(e, "iconTabs", 6)}
-            href="#pablo"
+            href="#"
           >
             Forum
           </NavLink>
@@ -42,7 +53,7 @@ export default class extends React.Component {
               marginBottom: this.state.nameShow ? "10px" : ""
             }}
             onClick={e => this.toggleTabs(e, "iconTabs", 7)}
-            href="#pablo"
+            href="#"
           >
             Info
           </NavLink>
@@ -57,7 +68,7 @@ export default class extends React.Component {
               marginBottom: this.state.nameShow ? "10px" : ""
             }}
             onClick={e => this.toggleTabs(e, "iconTabs", 1)}
-            href="#pablo"
+            href="#"
           >
             <i className="tim-icons icon-spaceship" />
             {this.state.nameShow && "TEXT"}
@@ -73,7 +84,7 @@ export default class extends React.Component {
               marginBottom: this.state.nameShow ? "10px" : ""
             }}
             onClick={e => this.toggleTabs(e, "iconTabs", 2)}
-            href="#pablo"
+            href="#"
           >
             <i className="tim-icons icon-settings-gear-63" />
             {this.state.nameShow && "TEXT"}
@@ -89,7 +100,7 @@ export default class extends React.Component {
               marginBottom: this.state.nameShow ? "10px" : ""
             }}
             onClick={e => this.toggleTabs(e, "iconTabs", 3)}
-            href="#pablo"
+            href="#"
           >
             <i className="tim-icons icon-bag-16" />
             {this.state.nameShow && "TEXT"}
@@ -105,7 +116,7 @@ export default class extends React.Component {
               marginBottom: this.state.nameShow ? "10px" : ""
             }}
             onClick={e => this.toggleTabs(e, "iconTabs", 4)}
-            href="#pablo"
+            href="#"
           >
             <i className="tim-icons icon-bag-16" />
             {this.state.nameShow && "TEXT"}
@@ -121,14 +132,14 @@ export default class extends React.Component {
               marginBottom: this.state.nameShow ? "10px" : ""
             }}
             onClick={e => this.toggleTabs(e, "iconTabs", 5)}
-            href="#pablo"
+            href="#"
           >
             <i className="tim-icons icon-bag-16" />
             {this.state.nameShow && "TEXT"}
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href={window.location.hash}>
+          <NavLink href="#">
             <img
               alt="..."
               className="img-fluid rounded-circle shadow-lg"
@@ -137,7 +148,44 @@ export default class extends React.Component {
             />
           </NavLink>
         </NavItem>
+        <NavItem>
+          <UncontrolledDropdown>
+            <DropdownToggle
+              caret
+              color="default"
+              data-toggle="dropdown"
+              href="#"
+              id="navbarDropdownMenuLink"
+              nav
+              onClick={e => e.preventDefault()}
+            >
+              <i
+                aria-hidden={true}
+                className="tim-icons icon-settings-gear-63"
+              />
+            </DropdownToggle>
+            <DropdownMenu aria-labelledby="navbarDropdownMenuLink" right>
+              <DropdownItem header>Pilihan</DropdownItem>
+              <DropdownItem href="#" onClick={e => e.preventDefault()}>
+                Pengaturan
+              </DropdownItem>
+              <DropdownItem
+                href="#"
+                onClick={e => {
+                  e.preventDefault();
+                  localStorage.clear();
+                  window.location.href = "/";
+                }}
+              >
+                Keluar
+              </DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
+          {/* </NavLink> */}
+        </NavItem>
       </Nav>
+      //   </CardBody>
+      // </Card>
     );
   }
 }
