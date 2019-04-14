@@ -14,7 +14,6 @@ import {
   DropdownItem,
   UncontrolledDropdown
 } from "reactstrap";
-import InputFile from "@material-ui/core/Input";
 
 export default class extends React.Component {
   state = {
