@@ -16,6 +16,7 @@ export const login = (dispatch, userData, refreshSetter, callback) => {
     .then(res => {
       refreshSetter(false);
       if (res.data.status === 200) {
+        localStorage.clear("wrong");
         localStorage.setItem("token", JSON.stringify(res.data.message.token));
         window.location.href = "/dashboard";
         dispatch({
@@ -23,20 +24,24 @@ export const login = (dispatch, userData, refreshSetter, callback) => {
           payload: res.data
         });
       } else {
+        localStorage.setItem("wrong", true);
         callback();
         dispatch({
           type: type.error,
           payload: res.data
         });
+        window.location.href = "/wrong";
       }
     })
     .catch(err => {
+      localStorage.setItem("wrong", true);
       callback();
       refreshSetter(false);
       dispatch({
         type: type.error,
         payload: err
       });
+      window.location.href = "/wrong";
     });
 };
 

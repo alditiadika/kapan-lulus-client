@@ -30,7 +30,12 @@ import Footer from "../utils/footer";
 import { mapStateToProps, mapDispatchToProps } from "./actions";
 import Loader from "../utils/spinner";
 import First from "./modal-register/first";
-// import { isEmpty } from '../../validator'
+import Second from "./modal-register/second";
+import Third from "./modal-register/third";
+import Fourth from "./modal-register/fourth";
+import Fifth from "./modal-register/fifth";
+import End from "./modal-register/end";
+// import { isEmpty, emailValidator } from "../../validator";
 
 class RegisterPage extends React.Component {
   state = {
@@ -38,8 +43,22 @@ class RegisterPage extends React.Component {
     isNeedRefresh: false,
     isEmpty: false,
     modalOpen: {
-      first: false
-    }
+      first: false,
+      second: false,
+      third: false,
+      fourth: false,
+      fifth: false,
+      end: false
+    },
+    formdata: {
+      role: { id: 2, name: "Mahasiswa" },
+      name: "",
+      email: "",
+      password: "",
+      rePassword: "",
+      isAgree: true
+    },
+    warning: { status: false, message: "" }
   };
   toggleTabs = (e, stateName, index) => {
     e.preventDefault();
@@ -47,7 +66,64 @@ class RegisterPage extends React.Component {
       [stateName]: index
     });
   };
-
+  changeFormData = (name, value) =>
+    this.setState({
+      warning: false,
+      formdata: {
+        ...this.state.formdata,
+        [name]: value
+      }
+    });
+  validator = () => {
+    // let role = !isEmpty(this.state.formdata.role);
+    // let name = !isEmpty(this.state.formdata.name);
+    // let email = emailValidator(this.state.formdata.email);
+    // let password = this.state.formdata.password.length >= 6;
+    // let rePassword =
+    //   this.state.formdata.password === this.state.formdata.rePassword;
+    // if (!role || !name) {
+    //   this.setState({
+    //     warning: {
+    //       status: true,
+    //       message: "harap isi semua data"
+    //     }
+    //   });
+    // } else if (!password) {
+    //   this.setState({
+    //     warning: {
+    //       status: true,
+    //       message: "Password setidaknya 6 karaketer"
+    //     }
+    //   });
+    // } else if (!rePassword) {
+    //   this.setState({
+    //     warning: {
+    //       status: true,
+    //       message: "Kombinasi password tidak cocok"
+    //     }
+    //   });
+    // } else if (!email) {
+    //   this.setState({
+    //     warning: {
+    //       status: true,
+    //       message: "Email tidak valid"
+    //     }
+    //   });
+    // } else {
+    //   this.setState({
+    //     modalOpen: {
+    //       ...this.state.modalOpen,
+    //       first: true
+    //     }
+    //   });
+    // }
+    this.setState({
+      modalOpen: {
+        ...this.state.modalOpen,
+        first: true
+      }
+    });
+  };
   render() {
     if (this.state.isEmpty) {
       setTimeout(() => {
@@ -61,6 +137,133 @@ class RegisterPage extends React.Component {
             close={() =>
               this.setState({
                 modalOpen: { ...this.state.modalOpen, first: false }
+              })
+            }
+            next={() =>
+              this.setState({
+                modalOpen: {
+                  ...this.state.modalOpen,
+                  first: false,
+                  second: true
+                }
+              })
+            }
+            name={this.state.formdata.name.split(" ")[0]}
+          />
+        )}
+        {this.state.modalOpen.second && (
+          <Second
+            close={() =>
+              this.setState({
+                modalOpen: { ...this.state.modalOpen, second: false }
+              })
+            }
+            next={() =>
+              this.setState({
+                modalOpen: {
+                  ...this.state.modalOpen,
+                  second: false,
+                  third: true
+                }
+              })
+            }
+            before={() => {
+              this.setState({
+                modalOpen: {
+                  ...this.state.modalOpen,
+                  second: false,
+                  first: true
+                }
+              });
+            }}
+          />
+        )}
+        {this.state.modalOpen.third && (
+          <Third
+            close={() =>
+              this.setState({
+                modalOpen: { ...this.state.modalOpen, third: false }
+              })
+            }
+            next={() =>
+              this.setState({
+                modalOpen: {
+                  ...this.state.modalOpen,
+                  third: false,
+                  fourth: true
+                }
+              })
+            }
+            before={() => {
+              this.setState({
+                modalOpen: {
+                  ...this.state.modalOpen,
+                  third: false,
+                  second: true
+                }
+              });
+            }}
+          />
+        )}
+        {this.state.modalOpen.fourth && (
+          <Fourth
+            close={() =>
+              this.setState({
+                modalOpen: { ...this.state.modalOpen, fourth: false }
+              })
+            }
+            next={() =>
+              this.setState({
+                modalOpen: {
+                  ...this.state.modalOpen,
+                  fourth: false,
+                  fifth: true
+                }
+              })
+            }
+            before={() => {
+              this.setState({
+                modalOpen: {
+                  ...this.state.modalOpen,
+                  fourth: false,
+                  third: true
+                }
+              });
+            }}
+          />
+        )}
+        {this.state.modalOpen.fifth && (
+          <Fifth
+            close={() =>
+              this.setState({
+                modalOpen: { ...this.state.modalOpen, fifth: false }
+              })
+            }
+            next={() =>
+              this.setState({
+                modalOpen: {
+                  ...this.state.modalOpen,
+                  fifth: false,
+                  end: true
+                }
+              })
+            }
+            before={() => {
+              this.setState({
+                modalOpen: {
+                  ...this.state.modalOpen,
+                  fifth: false,
+                  fourth: true
+                }
+              });
+            }}
+          />
+        )}
+        {this.state.modalOpen.end && (
+          <End
+            close={() =>
+              this.setState({
+                modalOpen: { ...this.state.modalOpen, end: false }
               })
             }
           />
@@ -77,29 +280,6 @@ class RegisterPage extends React.Component {
             <div className="page-header-image" />
             <div className="content">
               <Loader isNeedRefresh={this.state.isNeedRefresh} />
-              {((this.props.auth.status !== null &&
-                this.props.auth.status !== 200) ||
-                this.state.isEmpty) && (
-                <Alert
-                  style={{
-                    margin: "auto",
-                    width: "500px",
-                    marginBottom: "40px"
-                  }}
-                  className="alert-with-icon"
-                >
-                  <span
-                    data-notify="icon"
-                    className="tim-icons icon-support-17"
-                  />
-                  <span>Username atau password tidak cocok, </span>
-                  <span>
-                    <a style={{ color: "red" }} href={window.location.hash}>
-                      lupa password?
-                    </a>
-                  </span>
-                </Alert>
-              )}
               <Container>
                 <Row>
                   <Col className="offset-lg-0 offset-md-3" lg="5" md="6">
@@ -115,7 +295,13 @@ class RegisterPage extends React.Component {
                               className={classnames({
                                 active: this.state.iconTabs === 1
                               })}
-                              onClick={e => this.toggleTabs(e, "iconTabs", 1)}
+                              onClick={e => {
+                                this.toggleTabs(e, "iconTabs", 1);
+                                this.changeFormData("role", {
+                                  id: 2,
+                                  name: "Mahasiswa"
+                                });
+                              }}
                               href={window.location.hash}
                             >
                               <i className="tim-icons icon-spaceship" />
@@ -127,7 +313,13 @@ class RegisterPage extends React.Component {
                               className={classnames({
                                 active: this.state.iconTabs === 2
                               })}
-                              onClick={e => this.toggleTabs(e, "iconTabs", 2)}
+                              onClick={e => {
+                                this.toggleTabs(e, "iconTabs", 2);
+                                this.changeFormData("role", {
+                                  id: 2,
+                                  name: "Dosen"
+                                });
+                              }}
                               href={window.location.hash}
                             >
                               <i className="tim-icons icon-settings-gear-63" />
@@ -149,6 +341,13 @@ class RegisterPage extends React.Component {
                             <Input
                               placeholder="Nama Lengkap"
                               type="text"
+                              value={this.state.formdata.name}
+                              onKeyPress={e =>
+                                e.key === "Enter" && this.validator()
+                              }
+                              onChange={e =>
+                                this.changeFormData("name", e.target.value)
+                              }
                               onFocus={e =>
                                 this.setState({ fullNameFocus: true })
                               }
@@ -169,6 +368,13 @@ class RegisterPage extends React.Component {
                             </InputGroupAddon>
                             <Input
                               placeholder="Email"
+                              value={this.state.formdata.email}
+                              onKeyPress={e =>
+                                e.key === "Enter" && this.validator()
+                              }
+                              onChange={e =>
+                                this.changeFormData("email", e.target.value)
+                              }
                               type="text"
                               onFocus={e => this.setState({ emailFocus: true })}
                               onBlur={e => this.setState({ emailFocus: false })}
@@ -186,7 +392,14 @@ class RegisterPage extends React.Component {
                             </InputGroupAddon>
                             <Input
                               placeholder="Password"
-                              type="text"
+                              type="password"
+                              value={this.state.formdata.password}
+                              onKeyPress={e =>
+                                e.key === "Enter" && this.validator()
+                              }
+                              onChange={e =>
+                                this.changeFormData("password", e.target.value)
+                              }
                               onFocus={e =>
                                 this.setState({ passwordFocus: true })
                               }
@@ -207,7 +420,17 @@ class RegisterPage extends React.Component {
                             </InputGroupAddon>
                             <Input
                               placeholder="Re-Password"
-                              type="text"
+                              type="password"
+                              value={this.state.formdata.rePassword}
+                              onKeyPress={e =>
+                                e.key === "Enter" && this.validator()
+                              }
+                              onChange={e =>
+                                this.changeFormData(
+                                  "rePassword",
+                                  e.target.value
+                                )
+                              }
                               onFocus={e =>
                                 this.setState({ repasswordFocus: true })
                               }
@@ -218,30 +441,31 @@ class RegisterPage extends React.Component {
                           </InputGroup>
                           <FormGroup check className="text-left">
                             <Label check>
-                              <Input type="checkbox" />
+                              <Input
+                                checked={this.state.formdata.isAgree}
+                                onChange={() => {
+                                  this.changeFormData(
+                                    "isAgree",
+                                    !this.state.formdata.isAgree
+                                  );
+                                }}
+                                type="checkbox"
+                              />
                               <span className="form-check-sign" />
                               Dengan ini saya menyetujui{" "}
-                              <a
-                                href="#pablo"
-                                onClick={e => e.preventDefault()}
-                              >
-                                syarat dan ketentuan
-                              </a>
-                              .
+                              <a href="#!">syarat dan ketentuan</a>.
                             </Label>
                           </FormGroup>
                         </Form>
                       </CardBody>
                       <CardFooter>
+                        {this.state.warning.status && (
+                          <Alert color="danger">
+                            {this.state.warning.message}
+                          </Alert>
+                        )}
                         <Button
-                          onClick={() =>
-                            this.setState({
-                              modalOpen: {
-                                ...this.state.modalOpen,
-                                first: true
-                              }
-                            })
-                          }
+                          onClick={this.validator}
                           className="mr-5"
                           color="info"
                           size="lg"
