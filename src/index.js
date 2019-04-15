@@ -28,7 +28,9 @@ ReactDOM.render(
     {/*delete account in localStorage at first or browser reload*/}
     {/* {localStorage.clear()} */}
     <BrowserRouter>
-      {!localStorage.token ? (
+      {window.location.pathname === "/wrong" && localStorage.wrong ? (
+        <Route render={props => <Error.render {...props} />} />
+      ) : !localStorage.token ? (
         <Route render={props => <Login.render {...props} />} />
       ) : isAvailableComponent ? (
         <Switch>

@@ -15,8 +15,7 @@ import {
   InputGroupAddon,
   InputGroupText,
   InputGroup,
-  Button,
-  Alert
+  Button
 } from "reactstrap";
 
 import Loader from "../../utils/spinner";
@@ -161,6 +160,7 @@ class PagesNavbar extends React.Component {
                     value={this.state.username}
                     name="username"
                     type="text"
+                    disabled={this.props.isNeedRefresh}
                   />
                   <InputGroupAddon addonType="append">
                     <InputGroupText>
@@ -180,6 +180,7 @@ class PagesNavbar extends React.Component {
                       event.key === "Enter" && this.onLoginClick()
                     }
                     value={this.state.password}
+                    disabled={this.props.isNeedRefresh}
                   />
                   <InputGroupAddon addonType="append">
                     <InputGroupText>
@@ -195,25 +196,12 @@ class PagesNavbar extends React.Component {
                     onClick={this.onLoginClick}
                     rel="noopener noreferrer"
                     target="_blank"
+                    disabled={this.props.isNeedRefresh}
                   >
                     Login
                   </Button>
                 </div>
               </NavbarBrand>
-              {this.state.collapseOpen && this.props.isEmpty && (
-                <Alert style={{ margin: "auto" }} className="alert-with-icon">
-                  <span
-                    data-notify="icon"
-                    className="tim-icons icon-support-17"
-                  />
-                  <span>Username atau password tidak cocok, </span>
-                  <span>
-                    <a style={{ color: "red" }} href={window.location.hash}>
-                      lupa password?
-                    </a>
-                  </span>
-                </Alert>
-              )}
               <div className="text-center">
                 {this.state.collapseOpen && (
                   <Loader isNeedRefresh={this.props.isNeedRefresh} />

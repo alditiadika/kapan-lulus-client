@@ -25,9 +25,10 @@ export default class extends React.Component {
 
   render() {
     return (
-      // <Card>
-      //   <CardBody>
-      <Nav className="nav-tabs-info" role="tablist" /*tabs*/>
+      <Nav
+        className="nav-tabs-info"
+        role="tablist" /*tabs={this.props.isTabs}*/
+      >
         <NavItem>
           <NavLink
             className={classnames({
@@ -164,7 +165,11 @@ export default class extends React.Component {
                 className="tim-icons icon-settings-gear-63"
               />
             </DropdownToggle>
-            <DropdownMenu aria-labelledby="navbarDropdownMenuLink" right>
+            <DropdownMenu
+              style={{ backgroundColor: "black" }}
+              aria-labelledby="navbarDropdownMenuLink"
+              right
+            >
               <DropdownItem header>Pilihan</DropdownItem>
               <DropdownItem href="#" onClick={e => e.preventDefault()}>
                 Pengaturan
@@ -181,11 +186,8 @@ export default class extends React.Component {
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
-          {/* </NavLink> */}
         </NavItem>
       </Nav>
-      //   </CardBody>
-      // </Card>
     );
   }
 }

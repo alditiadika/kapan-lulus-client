@@ -140,7 +140,7 @@ class PagesNavbar extends React.Component {
                 </Col>
               </Row>
             </div>
-            <RightOptions />
+            <RightOptions isTabs={this.state.collapseOpen} />
           </Collapse>
         </Container>
       </Navbar>
