@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import "assets/css/nucleo-icons.css";
 import "assets/scss/blk-design-system-react.scss?v=1.0.0";
 import "assets/demo/demo.css";
-import { routesAfterLogin as routes, Login, Error } from "./routes";
+import { routesAfterLogin as routes, Login, Error, Wrong } from "./routes";
 import store from "./store";
 
 if (localStorage.token) {
@@ -29,7 +29,7 @@ ReactDOM.render(
     {/* {localStorage.clear()} */}
     <BrowserRouter>
       {window.location.pathname === "/wrong" && localStorage.wrong ? (
-        <Route render={props => <Error.render {...props} />} />
+        <Route render={props => <Wrong.render {...props} />} />
       ) : !localStorage.token ? (
         <Route render={props => <Login.render {...props} />} />
       ) : isAvailableComponent ? (
