@@ -171,11 +171,16 @@ export default class extends React.Component {
               right
             >
               <DropdownItem header>Pilihan</DropdownItem>
-              <DropdownItem href="#" onClick={e => e.preventDefault()}>
+              <DropdownItem
+                style={{ color: "white" }}
+                href="#"
+                onClick={e => e.preventDefault()}
+              >
                 Pengaturan
               </DropdownItem>
               <DropdownItem
                 href="#"
+                style={{ color: "white" }}
                 onClick={e => {
                   e.preventDefault();
                   localStorage.clear();

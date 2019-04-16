@@ -16,7 +16,7 @@ const LoginComponent = Loadable({
   loading: Loading
 });
 const DashboardComponent = Loadable({
-  loader: () => import("./views/components/dashboard"),
+  loader: () => import("./views/components"),
   loading: Loading
 });
 const ErrorComponent = Loadable({
@@ -35,6 +35,11 @@ const AboutComponent = Loadable({
   loader: () => import("./views/components/about"),
   loading: Loading
 });
+const WrongUser = Loadable({
+  loader: () => import("./views/wrong-user"),
+  loading: Loading
+});
+export const Wrong = { parth: "/wrong", render: WrongUser };
 export const Error = { Path: "/error", render: ErrorComponent };
 export const Login = { path: "/", render: LoginComponent };
 
