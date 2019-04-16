@@ -33,7 +33,7 @@ export default class extends React.Component {
                   color="info"
                   size="lg"
                 >
-                  Go Back To Home
+                  Home
                 </Button>
               </h4>
             </TabPane>

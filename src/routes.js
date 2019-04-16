@@ -16,7 +16,7 @@ const LoginComponent = Loadable({
   loading: Loading
 });
 const DashboardComponent = Loadable({
-  loader: () => import("./views/components/dashboard"),
+  loader: () => import("./views/components"),
   loading: Loading
 });
 const ErrorComponent = Loadable({

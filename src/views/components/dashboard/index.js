@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import {
   Card,
@@ -15,204 +15,110 @@ import {
 } from "reactstrap";
 
 import { mapStateToProps } from "./actions";
-import Nav from "../../utils/navbar";
-import Footer from "../../utils/footer";
 
 class Dashboard extends React.Component {
   render() {
     return (
-      <Fragment>
-        <Nav />
-        <FirstRegister
-          toggleComponent={status => this.setState({ openFirstModal: status })}
-        />
-        <Container>
-          <Card>
-            <CardBody>
-              <Row>
-                <Col>
-                  <InputGroup>
-                    <Input
-                      placeholder="Cari Dosen pembimbing"
-                      color="black"
-                      onKeyPress={event =>
-                        event.key === "Enter" && alert("SOON")
-                      }
-                      type="text"
-                    />
-                    <InputGroupAddon addonType="append">
-                      <InputGroupText>
-                        <i
-                          onClick={() => alert("SOON")}
-                          className="fa fa-search"
-                        />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                  </InputGroup>
-                </Col>
-                <Col>
-                  <InputGroup>
-                    <Input
-                      placeholder="Cari Universitas"
-                      color="black"
-                      onKeyPress={event =>
-                        event.key === "Enter" && alert("SOON")
-                      }
-                      type="text"
-                    />
-                    <InputGroupAddon addonType="append">
-                      <InputGroupText>
-                        <i
-                          onClick={() => alert("SOON")}
-                          className="fa fa-search"
-                        />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                  </InputGroup>
-                </Col>
-              </Row>
-            </CardBody>
-          </Card>
-          <Card>
-            <CardBody>
-              <Row>
-                <Col>
-                  <a href={window.location.hash}>0</a> Permintaan belum terjawab
-                  | <a href={window.location.hash}>0</a> Dosen Pembimbing |{" "}
-                  <a href={window.location.hash}>Undang Dosen</a>
-                </Col>
-              </Row>
-            </CardBody>
-          </Card>
-          <Row>
-            <Col className="col-sm-3">
-              <Card>
-                <CardBody>
-                  <p>Profil Saya</p>
-                  <div className="text-center">
-                    <img
-                      alt="..."
-                      className="img-fluid rounded-circle shadow-lg"
-                      src={require("assets/img/james.jpg")}
-                      style={{ height: "40px", width: "40px" }}
-                    />
-                    <br />
-                    <br />
-                    <p>Selamat datang Administrator</p>
-                    <p>
-                      <a href={window.location.hash}>Perbaharui Profil anda</a>
-                    </p>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col>
-              <Card>
-                <CardBody>
-                  <p>
-                    Bidang Studi: <a href={window.location.hash}>Fisika</a>
-                  </p>
-                  <div className="text-center">
-                    *Mohon Maaf saat ini anda belum memiliki dosen pembimbing,
-                    anda diperbolehkan memilih maksimal 2 dosen pembimbing
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col className="col-sm-4">
-              <Card>
-                <CardBody>
-                  <p>
-                    <a href="/internship">Beasiswa Terkini</a>
-                  </p>
-                  <Carousel />
-                  <br />
-                  <div className="text-center">
-                    <Button>Selengkapnya</Button>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
-        <Footer />
-      </Fragment>
-    );
-  }
-}
-export default connect(mapStateToProps)(Dashboard);
-
-class FirstRegister extends React.Component {
-  render() {
-    return (
-      <Container style={{ marginTop: "100px" }}>
-        <Row style={{ marginBottom: "20px" }}>
-          <Col>
-            Hai Administrator selamat datang, mulai gunakan KAPAN• Lulus dengan
-            3 langkah mudah:
-          </Col>
-        </Row>
+      <Container>
+        <Card>
+          <CardBody>
+            <Row>
+              <Col>
+                <InputGroup>
+                  <Input
+                    placeholder="Cari Dosen pembimbing"
+                    color="black"
+                    onKeyPress={event => event.key === "Enter" && alert("SOON")}
+                    type="text"
+                  />
+                  <InputGroupAddon addonType="append">
+                    <InputGroupText>
+                      <i
+                        onClick={() => alert("SOON")}
+                        className="fa fa-search"
+                      />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                </InputGroup>
+              </Col>
+              <Col>
+                <InputGroup>
+                  <Input
+                    placeholder="Cari Universitas"
+                    color="black"
+                    onKeyPress={event => event.key === "Enter" && alert("SOON")}
+                    type="text"
+                  />
+                  <InputGroupAddon addonType="append">
+                    <InputGroupText>
+                      <i
+                        onClick={() => alert("SOON")}
+                        className="fa fa-search"
+                      />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                </InputGroup>
+              </Col>
+            </Row>
+          </CardBody>
+        </Card>
+        <Card>
+          <CardBody>
+            <Row>
+              <Col>
+                <a href={window.location.hash}>0</a> Permintaan belum terjawab |{" "}
+                <a href={window.location.hash}>0</a> Dosen Pembimbing |{" "}
+                <a href={window.location.hash}>Undang Dosen</a>
+              </Col>
+            </Row>
+          </CardBody>
+        </Card>
         <Row>
-          <Col>
-            <Card style={{ height: "220px" }}>
+          <Col className="col-sm-3">
+            <Card>
               <CardBody>
+                <p>Profil Saya</p>
                 <div className="text-center">
-                  <p>
-                    <strong>1. Perkenalkan diri anda</strong>
-                  </p>
-                  <br />
-                  <p>
-                    Lengkapi profil anda guna meningkatkan kesuksesan anda di
-                    KAPAN• Lulus
-                  </p>
+                  <img
+                    alt="..."
+                    className="img-fluid rounded-circle shadow-lg"
+                    src={require("assets/img/james.jpg")}
+                    style={{ height: "40px", width: "40px" }}
+                  />
                   <br />
                   <br />
                   <p>
-                    <Button onClick={() => this.props.toggleComponent(true)}>
-                      Lengkapi Profil
-                    </Button>
+                    <a href="#!" onClick={() => this.props.changeComponent(1)}>
+                      Perbaharui Profil anda
+                    </a>
                   </p>
                 </div>
               </CardBody>
             </Card>
           </Col>
           <Col>
-            <Card style={{ height: "220px" }}>
+            <Card>
               <CardBody>
+                <p>
+                  Bidang Studi: <a href={window.location.hash}>Fisika</a>
+                </p>
                 <div className="text-center">
-                  <p>
-                    <strong>2. Temukan dosen pembimbing anda</strong>
-                  </p>
-                  <br />
-                  <p>
-                    Disini anda dapat mencari dosen pembimbing yang sesuai
-                    dengan minat penelitian anda dari berbagai bidang studi
-                  </p>
-                  <br />
-                  <p>
-                    <Button>Temukan dosen pembimbing</Button>
-                  </p>
+                  *Mohon Maaf saat ini anda belum memiliki dosen pembimbing,
+                  anda diperbolehkan memilih maksimal 2 dosen pembimbing
                 </div>
               </CardBody>
             </Card>
           </Col>
-          <Col>
-            <Card style={{ height: "220px" }}>
+          <Col className="col-sm-4">
+            <Card>
               <CardBody>
+                <p>
+                  <a href="/internship">Beasiswa Terkini</a>
+                </p>
+                <Carousel />
+                <br />
                 <div className="text-center">
-                  <p>
-                    <strong>3. Ketahui info seputar minat anda</strong>
-                  </p>
-                  <br />
-                  <p>
-                    Proyek dosen mungkin bisa jadi inspirasi anda untuk tugas
-                    akhir, temukan juga info seputar dana penelitian serta
-                    referensi jurnal anda
-                  </p>
-                  <br />
-                  <p>
-                    <Button>Info seputar topik penelitian</Button>
-                  </p>
+                  <Button>Selengkapnya</Button>
                 </div>
               </CardBody>
             </Card>
@@ -222,6 +128,7 @@ class FirstRegister extends React.Component {
     );
   }
 }
+export default connect(mapStateToProps)(Dashboard);
 
 const carouselItems = [
   {
