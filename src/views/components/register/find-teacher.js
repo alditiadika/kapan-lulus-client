@@ -153,6 +153,8 @@ export default class extends React.Component {
                                     paddingBottom: "0px"
                                   }}
                                   href={listTeacher[i].goto}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
                                 >
                                   Selengkapnya
                                 </a>

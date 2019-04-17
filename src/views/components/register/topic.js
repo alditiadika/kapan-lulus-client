@@ -185,7 +185,7 @@ export default class extends React.Component {
                   </Col>
                 </Row>
                 {this.state.dummyArr.map(() => (
-                  <Row className="pb-3">
+                  <Row key={Math.random()} className="pb-3">
                     <Col className="col-sm-3">
                       <img
                         alt="..."
