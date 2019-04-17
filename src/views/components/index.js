@@ -16,9 +16,12 @@ class EntryPoint extends React.Component {
     indexRender: 0
   };
   controller = indexRender => {
-    if (indexRender === 1) return <ProfileComplete />;
-    else if (indexRender === 2) return <FindTeacher />;
-    else if (indexRender === 3) return <Topic />;
+    if (indexRender === 1)
+      return <ProfileComplete changeComponent={this.changeComponent} />;
+    else if (indexRender === 2)
+      return <FindTeacher changeComponent={this.changeComponent} />;
+    else if (indexRender === 3)
+      return <Topic changeComponent={this.changeComponent} />;
     else return <Dashboard changeComponent={this.changeComponent} />;
   };
   changeComponent = indexRender => {

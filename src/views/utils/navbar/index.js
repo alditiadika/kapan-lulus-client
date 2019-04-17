@@ -93,7 +93,7 @@ class PagesNavbar extends React.Component {
             <NavbarBrand>
               <InputGroup>
                 <Input
-                  placeholder="Search"
+                  placeholder="Cari Perguruan Tinggi atau Dosen"
                   color="black"
                   onKeyPress={event => event.key === "Enter" && alert("SOON")}
                   type="text"
