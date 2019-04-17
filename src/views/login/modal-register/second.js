@@ -12,7 +12,7 @@ import {
   Alert
 } from "reactstrap";
 
-// import { isEmpty } from "../../../validator";
+import { isEmpty } from "../../../validator";
 
 export default class extends React.Component {
   state = {
@@ -22,17 +22,16 @@ export default class extends React.Component {
     warning: { status: false, message: "" }
   };
   validator = () => {
-    // if (isEmpty(this.state.verificationCode)) {
-    //   this.setState({
-    //     warning: {
-    //       status: true,
-    //       message: "Harap isi semua data"
-    //     }
-    //   });
-    // } else {
-    //   this.props.next();
-    // }
-    this.props.next();
+    if (isEmpty(this.state.verificationCode)) {
+      this.setState({
+        warning: {
+          status: true,
+          message: "Harap isi semua data"
+        }
+      });
+    } else {
+      this.props.next();
+    }
   };
   render() {
     return (

@@ -2,6 +2,7 @@ import React from "react";
 import { Button, FormGroup, Modal, Form, Alert, Input } from "reactstrap";
 import InputLabel from "@material-ui/core/InputLabel";
 import moment from "moment";
+
 export default class extends React.Component {
   state = {
     emailFocus: false,
@@ -12,7 +13,27 @@ export default class extends React.Component {
     warning: { status: false, message: "" }
   };
   validator = () => {
-    this.props.next();
+    if (
+      this.state.estimatedDate === "" ||
+      this.state.estimatedDate === null ||
+      this.state.estimatedDate === undefined
+    ) {
+      this.setState({
+        warning: {
+          status: true,
+          message: "Harap Isi Semua data"
+        }
+      });
+    } else if (moment(this.state.estimatedDate).format() < moment().format()) {
+      this.setState({
+        warning: {
+          status: true,
+          message: "Estimasi kelulusan anda tidak valid"
+        }
+      });
+    } else {
+      this.props.next();
+    }
   };
   render() {
     return (

@@ -35,7 +35,7 @@ import Third from "./modal-register/third";
 import Fourth from "./modal-register/fourth";
 import Fifth from "./modal-register/fifth";
 import End from "./modal-register/end";
-// import { isEmpty, emailValidator } from "../../validator";
+import { isEmpty, emailValidator } from "../../validator";
 
 class RegisterPage extends React.Component {
   state = {
@@ -53,9 +53,8 @@ class RegisterPage extends React.Component {
     formdata: {
       role: { id: 2, name: "Mahasiswa" },
       name: "",
-      email: "",
-      password: "",
-      rePassword: "",
+      emailRegister: "",
+      passwordRegister: "",
       isAgree: true
     },
     warning: { status: false, message: "" }
@@ -75,54 +74,39 @@ class RegisterPage extends React.Component {
       }
     });
   validator = () => {
-    // let role = !isEmpty(this.state.formdata.role);
-    // let name = !isEmpty(this.state.formdata.name);
-    // let email = emailValidator(this.state.formdata.email);
-    // let password = this.state.formdata.password.length >= 6;
-    // let rePassword =
-    //   this.state.formdata.password === this.state.formdata.rePassword;
-    // if (!role || !name) {
-    //   this.setState({
-    //     warning: {
-    //       status: true,
-    //       message: "harap isi semua data"
-    //     }
-    //   });
-    // } else if (!password) {
-    //   this.setState({
-    //     warning: {
-    //       status: true,
-    //       message: "Password setidaknya 6 karaketer"
-    //     }
-    //   });
-    // } else if (!rePassword) {
-    //   this.setState({
-    //     warning: {
-    //       status: true,
-    //       message: "Kombinasi password tidak cocok"
-    //     }
-    //   });
-    // } else if (!email) {
-    //   this.setState({
-    //     warning: {
-    //       status: true,
-    //       message: "Email tidak valid"
-    //     }
-    //   });
-    // } else {
-    //   this.setState({
-    //     modalOpen: {
-    //       ...this.state.modalOpen,
-    //       first: true
-    //     }
-    //   });
-    // }
-    this.setState({
-      modalOpen: {
-        ...this.state.modalOpen,
-        first: true
-      }
-    });
+    let role = !isEmpty(this.state.formdata.role);
+    let name = !isEmpty(this.state.formdata.name);
+    let email = emailValidator(this.state.formdata.emailRegister);
+    let password = this.state.formdata.passwordRegister.length >= 6;
+    if (!role || !name) {
+      this.setState({
+        warning: {
+          status: true,
+          message: "harap isi semua data"
+        }
+      });
+    } else if (!password) {
+      this.setState({
+        warning: {
+          status: true,
+          message: "Password setidaknya 6 karaketer"
+        }
+      });
+    } else if (!email) {
+      this.setState({
+        warning: {
+          status: true,
+          message: "Email tidak valid"
+        }
+      });
+    } else {
+      this.setState({
+        modalOpen: {
+          ...this.state.modalOpen,
+          first: true
+        }
+      });
+    }
   };
   render() {
     if (this.state.isEmpty) {
@@ -358,7 +342,7 @@ class RegisterPage extends React.Component {
                           </InputGroup>
                           <InputGroup
                             className={classnames({
-                              "input-group-focus": this.state.emailFocus
+                              "input-group-focus": this.state.emailRegisterFocus
                             })}
                           >
                             <InputGroupAddon addonType="prepend">
@@ -368,21 +352,29 @@ class RegisterPage extends React.Component {
                             </InputGroupAddon>
                             <Input
                               placeholder="Email"
-                              value={this.state.formdata.email}
+                              value={this.state.formdata.emailRegister}
                               onKeyPress={e =>
                                 e.key === "Enter" && this.validator()
                               }
                               onChange={e =>
-                                this.changeFormData("email", e.target.value)
+                                this.changeFormData(
+                                  "emailRegister",
+                                  e.target.value
+                                )
                               }
                               type="text"
-                              onFocus={e => this.setState({ emailFocus: true })}
-                              onBlur={e => this.setState({ emailFocus: false })}
+                              onFocus={e =>
+                                this.setState({ emailRegisterFocus: true })
+                              }
+                              onBlur={e =>
+                                this.setState({ emailRegisterFocus: false })
+                              }
                             />
                           </InputGroup>
                           <InputGroup
                             className={classnames({
-                              "input-group-focus": this.state.passwordFocus
+                              "input-group-focus": this.state
+                                .passwordRegisterFocus
                             })}
                           >
                             <InputGroupAddon addonType="prepend">
@@ -392,50 +384,21 @@ class RegisterPage extends React.Component {
                             </InputGroupAddon>
                             <Input
                               placeholder="Password"
-                              type="password"
                               value={this.state.formdata.password}
                               onKeyPress={e =>
                                 e.key === "Enter" && this.validator()
                               }
                               onChange={e =>
-                                this.changeFormData("password", e.target.value)
-                              }
-                              onFocus={e =>
-                                this.setState({ passwordFocus: true })
-                              }
-                              onBlur={e =>
-                                this.setState({ passwordFocus: false })
-                              }
-                            />
-                          </InputGroup>
-                          <InputGroup
-                            className={classnames({
-                              "input-group-focus": this.state.repasswordFocus
-                            })}
-                          >
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="tim-icons icon-lock-circle" />
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                              placeholder="Re-Password"
-                              type="password"
-                              value={this.state.formdata.rePassword}
-                              onKeyPress={e =>
-                                e.key === "Enter" && this.validator()
-                              }
-                              onChange={e =>
                                 this.changeFormData(
-                                  "rePassword",
+                                  "passwordRegister",
                                   e.target.value
                                 )
                               }
                               onFocus={e =>
-                                this.setState({ repasswordFocus: true })
+                                this.setState({ passwordRegisterFocus: true })
                               }
                               onBlur={e =>
-                                this.setState({ repasswordFocus: false })
+                                this.setState({ passwordRegisterFocus: false })
                               }
                             />
                           </InputGroup>

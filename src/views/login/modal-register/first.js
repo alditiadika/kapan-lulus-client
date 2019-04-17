@@ -17,7 +17,7 @@ import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 
-// import { isEmpty } from "../../../validator";
+import { isEmpty } from "../../../validator";
 import data from "./data-dummy.js";
 
 export default class extends React.Component {
@@ -53,19 +53,18 @@ export default class extends React.Component {
     }
   };
   validator = () => {
-    // let university = isEmpty(this.state.formdata.university);
-    // let yearOfEntry = isEmpty(this.state.formdata.yearOfEntry);
-    // let department = isEmpty(this.state.formdata.department);
-    // let cardID = isEmpty(this.state.formdata.cardID.name);
-    // let studentID = isEmpty(this.state.formdata.studentID);
-    // if (university || yearOfEntry || department || cardID || studentID) {
-    //   this.setState({
-    //     warning: { status: true, message: "Harap isi semua data" }
-    //   });
-    // } else {
-    //   this.props.next();
-    // }
-    this.props.next();
+    let university = isEmpty(this.state.formdata.university);
+    let yearOfEntry = isEmpty(this.state.formdata.yearOfEntry);
+    let department = isEmpty(this.state.formdata.department);
+    let cardID = isEmpty(this.state.formdata.cardID.name);
+    let studentID = isEmpty(this.state.formdata.studentID);
+    if (university || yearOfEntry || department || cardID || studentID) {
+      this.setState({
+        warning: { status: true, message: "Harap isi semua data" }
+      });
+    } else {
+      this.props.next();
+    }
   };
   render() {
     return (

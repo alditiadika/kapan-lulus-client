@@ -81,6 +81,7 @@ class PagesNavbar extends React.Component {
   };
   onLoginClick = () => {
     if (this.state.username === "" || this.state.password === "") {
+      localStorage.setItem("wrong", true);
       window.location.href = "/wrong";
     } else {
       this.props.refreshRequest(true);
