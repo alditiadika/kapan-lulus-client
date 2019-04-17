@@ -1,5 +1,5 @@
 export default {
-  url: "http://192.168.0.101:8080",
+  url: "https://server-kl-node.herokuapp.com",
   endpoint: {
     login: "/api/user/login"
   }
