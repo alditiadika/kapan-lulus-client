@@ -44,20 +44,19 @@ export default class FirstRegister extends React.Component {
                   {this.state.isProfileComplete && "Lengkap"}
                   <br />
                   <p>
-                    {!this.state.completingProfile && (
-                      <Button
-                        onClick={() => {
-                          this.props.changeComponent(1);
-                          this.setState({
-                            completingProfile: true,
-                            findingTeacher: false,
-                            findingTopic: false
-                          });
-                        }}
-                      >
-                        Lengkapi Profil
-                      </Button>
-                    )}
+                    <Button
+                      onClick={() => {
+                        this.props.changeComponent(1);
+                        // this.setState({
+                        //   completingProfile: true,
+                        //   findingTeacher: false,
+                        //   findingTopic: false
+                        // });
+                      }}
+                      disabled={this.state.completingProfile}
+                    >
+                      Lengkapi Profil
+                    </Button>
                   </p>
                 </div>
               </CardBody>
@@ -79,20 +78,19 @@ export default class FirstRegister extends React.Component {
                   <br />
                   {this.state.isTeacherFound && "Lengkap"}
                   <p>
-                    {!this.state.findingTeacher && (
-                      <Button
-                        onClick={() => {
-                          this.props.changeComponent(2);
-                          this.setState({
-                            completingProfile: false,
-                            findingTeacher: true,
-                            findingTopic: false
-                          });
-                        }}
-                      >
-                        Temukan dosen pembimbing
-                      </Button>
-                    )}
+                    <Button
+                      onClick={() => {
+                        this.props.changeComponent(2);
+                        // this.setState({
+                        //   completingProfile: false,
+                        //   findingTeacher: true,
+                        //   findingTopic: false
+                        // });
+                      }}
+                      disabled={this.state.findingTeacher}
+                    >
+                      Temukan dosen pembimbing
+                    </Button>
                   </p>
                 </div>
               </CardBody>
@@ -115,20 +113,19 @@ export default class FirstRegister extends React.Component {
                   <br />
                   {this.state.isTopicFound && "Lengkap"}
                   <p>
-                    {!this.state.findingTopic && (
-                      <Button
-                        onClick={() => {
-                          this.props.changeComponent(3);
-                          this.setState({
-                            completingProfile: false,
-                            findingTeacher: false,
-                            findingTopic: true
-                          });
-                        }}
-                      >
-                        Info seputar topik penelitian
-                      </Button>
-                    )}
+                    <Button
+                      onClick={() => {
+                        this.props.changeComponent(3);
+                        // this.setState({
+                        //   completingProfile: false,
+                        //   findingTeacher: false,
+                        //   findingTopic: true
+                        // });
+                      }}
+                      disabled={this.state.findingTopic}
+                    >
+                      Info seputar topik penelitian
+                    </Button>
                   </p>
                 </div>
               </CardBody>
