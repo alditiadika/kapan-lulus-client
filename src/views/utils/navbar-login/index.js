@@ -108,9 +108,15 @@ class PagesNavbar extends React.Component {
               data-placement="bottom"
               to="/"
               rel="noopener noreferrer"
-              title="Designed and Coded by Creative Tim"
+              title="KAPAN• Lulus"
               tag={Link}
             >
+              <img
+                src={require("../../../assets/img/logo.1.png")}
+                alt="..."
+                className="mr-1"
+                style={{ width: "18px", height: "18px" }}
+              />
               <span>KAPAN• </span>
               Lulus
             </NavbarBrand>
@@ -161,7 +167,9 @@ class PagesNavbar extends React.Component {
                     value={this.state.username}
                     name="username"
                     type="text"
-                    disabled={this.props.isNeedRefresh}
+                    disabled={
+                      this.props.isNeedRefresh || this.props.interruptAllAction
+                    }
                   />
                   <InputGroupAddon addonType="append">
                     <InputGroupText>
@@ -181,7 +189,9 @@ class PagesNavbar extends React.Component {
                       event.key === "Enter" && this.onLoginClick()
                     }
                     value={this.state.password}
-                    disabled={this.props.isNeedRefresh}
+                    disabled={
+                      this.props.isNeedRefresh || this.props.interruptAllAction
+                    }
                   />
                   <InputGroupAddon addonType="append">
                     <InputGroupText>
@@ -197,7 +207,9 @@ class PagesNavbar extends React.Component {
                     onClick={this.onLoginClick}
                     rel="noopener noreferrer"
                     target="_blank"
-                    disabled={this.props.isNeedRefresh}
+                    disabled={
+                      this.props.isNeedRefresh || this.props.interruptAllAction
+                    }
                   >
                     Login
                   </Button>

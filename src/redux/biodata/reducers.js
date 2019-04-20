@@ -1,20 +1,47 @@
+import moment from "moment";
+
 import type from "./types";
-import { bindActionCreators } from "redux";
+
 const initialState = {
-  universitas: null,
-  tahunMasuk: null,
-  bidangStudi: null,
-  IDMahasiswa: null,
-  note: null,
-  dataKTM: null,
-  kodeVerifikasi: null,
-  fotoProfil: null,
-  topikPenelitian: null,
-  estimasiKelulusan: null
+  role: { id: 2, name: "student" },
+  name: "",
+  password: "",
+  email: "",
+  isAggree: true,
+  university: "",
+  yearOfEntry: "",
+  department: "",
+  studentID: "",
+  cardPhoto: { name: "" },
+  verificationCode: "",
+  profilePhoto: { name: "" },
+  topic: "",
+  estGraduationDate: moment()
+    .add(6, "months")
+    .format("YYYY-MM-DD"),
+  isLoading: false
 };
 
 export default (state = { ...initialState }, action) => {
-  switch (bindActionCreators.type) {
+  switch (action.type) {
+    case type.onChange: {
+      return action.payload.name === "email"
+        ? {
+            ...state,
+            [action.payload.name]: action.payload.value,
+            verificationCode: ""
+          }
+        : {
+            ...state,
+            [action.payload.name]: action.payload.value
+          };
+    }
+    case type.zero: {
+      return {
+        ...state,
+        verificationCode: action.payload.verificationCode
+      };
+    }
     case type.firstButton: {
       return {
         ...state

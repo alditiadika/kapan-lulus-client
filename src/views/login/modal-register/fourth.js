@@ -1,21 +1,21 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Button, FormGroup, Modal, Form, Alert } from "reactstrap";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import data from "./data-dummy.js";
-
-export default class extends React.Component {
+import { mapStateToProps, mapDispatchToProps } from "../actions";
+class FourthModal extends React.Component {
   state = {
     emailFocus: false,
     passwordFocus: false,
     data: data.department[0].topic,
-    topic: "",
     warning: { status: false, message: "" }
   };
-  validator = () => {
-    if (this.state.topic === "") {
+  validator = formdata => {
+    if (formdata.topic === "") {
       this.setState({
         warning: {
           status: true,
@@ -27,6 +27,7 @@ export default class extends React.Component {
     }
   };
   render() {
+    const formdata = this.props.biodataReducer;
     return (
       <Modal isOpen={true} modalClassName="modal-black">
         <div
@@ -51,11 +52,13 @@ export default class extends React.Component {
               </InputLabel>
               <Select
                 style={{ width: "100%", color: "white" }}
-                value={this.state.topic}
-                onChange={event => this.setState({ topic: event.target.value })}
-                inputProps={{
-                  name: "topic"
-                }}
+                value={formdata.topic}
+                onChange={event =>
+                  this.props.onChange({
+                    name: "topic",
+                    value: event.target.value
+                  })
+                }
               >
                 {this.state.data.map(item => (
                   <MenuItem key={Math.random()} value={item.label}>
@@ -79,7 +82,7 @@ export default class extends React.Component {
                 Sebelumnya
               </Button>
               <Button
-                onClick={this.validator}
+                onClick={() => this.validator(formdata)}
                 className="my-4"
                 color="info"
                 type="button"
@@ -93,3 +96,7 @@ export default class extends React.Component {
     );
   }
 }
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FourthModal);

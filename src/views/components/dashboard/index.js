@@ -20,6 +20,7 @@ class Dashboard extends React.Component {
   render() {
     return (
       <Container>
+        {/* <img alt="" src={this.props.auth.user.profile_file.file} /> */}
         {/* <Card>
           <CardBody>
             <Row>
@@ -90,8 +91,9 @@ class Dashboard extends React.Component {
                   <img
                     alt="..."
                     className="img-fluid rounded-circle shadow-lg"
-                    src={require("assets/img/james.jpg")}
-                    style={{ height: "40px", width: "40px" }}
+                    src={this.props.auth.user.profile_file.file}
+                    onClick={() => this.props.changeComponent(1)}
+                    style={{ height: "40px", width: "40px", cursor: "pointer" }}
                   />
                   <br />
                   <br />
@@ -108,7 +110,10 @@ class Dashboard extends React.Component {
             <Card>
               <CardBody>
                 <p>
-                  Bidang Studi: <a href={window.location.hash}>Fisika</a>
+                  Bidang Studi:{" "}
+                  <a href={window.location.hash}>
+                    {this.props.auth.user.department}
+                  </a>
                 </p>
                 <div className="text-center">
                   *Mohon Maaf saat ini anda belum memiliki dosen pembimbing,

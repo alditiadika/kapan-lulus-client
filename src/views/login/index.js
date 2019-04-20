@@ -6,7 +6,6 @@ import {
   Button,
   Card,
   CardBody,
-  CardFooter,
   Label,
   FormGroup,
   Form,
@@ -41,6 +40,7 @@ class RegisterPage extends React.Component {
   state = {
     iconTabs: 1,
     isNeedRefresh: false,
+    interruptAllAction: false,
     isEmpty: false,
     modalOpen: {
       first: false,
@@ -50,39 +50,26 @@ class RegisterPage extends React.Component {
       fifth: false,
       end: false
     },
-    formdata: {
-      role: { id: 2, name: "Mahasiswa" },
-      name: "",
-      emailRegister: "",
-      passwordRegister: "",
-      isAgree: true
-    },
     warning: { status: false, message: "" }
   };
+
   toggleTabs = (e, stateName, index) => {
     e.preventDefault();
     this.setState({
       [stateName]: index
     });
   };
-  changeFormData = (name, value) =>
-    this.setState({
-      warning: false,
-      formdata: {
-        ...this.state.formdata,
-        [name]: value
-      }
-    });
-  validator = () => {
-    let role = !isEmpty(this.state.formdata.role);
-    let name = !isEmpty(this.state.formdata.name);
-    let email = emailValidator(this.state.formdata.emailRegister);
-    let password = this.state.formdata.passwordRegister.length >= 6;
+
+  validator = formdata => {
+    let role = !isEmpty(formdata.role);
+    let name = !isEmpty(formdata.name);
+    let email = emailValidator(formdata.email);
+    let password = formdata.password.length >= 6;
     if (!role || !name) {
       this.setState({
         warning: {
           status: true,
-          message: "harap isi semua data"
+          message: "Harap isi semua data"
         }
       });
     } else if (!password) {
@@ -100,20 +87,41 @@ class RegisterPage extends React.Component {
         }
       });
     } else {
-      this.setState({
-        modalOpen: {
-          ...this.state.modalOpen,
-          first: true
+      const callbackAction = {
+        spinnerOff: () => this.setState({ interruptAllAction: false }),
+        warning: message =>
+          this.setState({
+            warning: {
+              status: true,
+              message: message
+            }
+          }),
+        modalOpen: () =>
+          this.setState({
+            modalOpen: {
+              ...this.state.modalOpen,
+              first: true
+            }
+          })
+      };
+      this.setState(
+        {
+          interruptAllAction: true
+        },
+        () => {
+          this.props.onFirstRegister(formdata, callbackAction);
         }
-      });
+      );
     }
   };
+
+  onChange = (name, value) => {
+    this.setState({ warning: { status: false } });
+    this.props.onChange({ name: name, value: value });
+  };
+
   render() {
-    if (this.state.isEmpty) {
-      setTimeout(() => {
-        this.setState({ isEmpty: false });
-      }, 10000);
-    }
+    const formdata = this.props.biodataReducer;
     return (
       <>
         {this.state.modalOpen.first && (
@@ -132,7 +140,7 @@ class RegisterPage extends React.Component {
                 }
               })
             }
-            name={this.state.formdata.name.split(" ")[0]}
+            name={formdata.name.split(" ")[0]}
           />
         )}
         {this.state.modalOpen.second && (
@@ -258,6 +266,7 @@ class RegisterPage extends React.Component {
           refreshRequest={status => this.setState({ isNeedRefresh: status })}
           emptyReport={status => this.setState({ isEmpty: status })}
           isEmpty={this.state.isEmpty}
+          interruptAllAction={this.state.interruptAllAction}
         />
         <div className="wrapper">
           <div className="page-header">
@@ -273,7 +282,7 @@ class RegisterPage extends React.Component {
                           Era Baru Bimbingan Tugas Akhir
                         </h3>
                         <h3 className="ml-2">Gabung Sekarang sebagai:</h3>
-                        <Nav className="nav-tabs-info" role="tablist" tabs>
+                        <Nav className="nav-tabs-info mb-3" role="tablist" tabs>
                           <NavItem>
                             <NavLink
                               className={classnames({
@@ -281,9 +290,9 @@ class RegisterPage extends React.Component {
                               })}
                               onClick={e => {
                                 this.toggleTabs(e, "iconTabs", 1);
-                                this.changeFormData("role", {
+                                this.onChange("role", {
                                   id: 2,
-                                  name: "Mahasiswa"
+                                  name: "student"
                                 });
                               }}
                               href={window.location.hash}
@@ -299,9 +308,9 @@ class RegisterPage extends React.Component {
                               })}
                               onClick={e => {
                                 this.toggleTabs(e, "iconTabs", 2);
-                                this.changeFormData("role", {
-                                  id: 2,
-                                  name: "Dosen"
+                                this.onChange("role", {
+                                  id: 1,
+                                  name: "teacher"
                                 });
                               }}
                               href={window.location.hash}
@@ -311,7 +320,7 @@ class RegisterPage extends React.Component {
                             </NavLink>
                           </NavItem>
                         </Nav>
-                        <Form className="form">
+                        <Form className="form mb-3">
                           <InputGroup
                             className={classnames({
                               "input-group-focus": this.state.fullNameFocus
@@ -325,12 +334,12 @@ class RegisterPage extends React.Component {
                             <Input
                               placeholder="Nama Lengkap"
                               type="text"
-                              value={this.state.formdata.name}
+                              value={formdata.name}
                               onKeyPress={e =>
-                                e.key === "Enter" && this.validator()
+                                e.key === "Enter" && this.validator(formdata)
                               }
                               onChange={e =>
-                                this.changeFormData("name", e.target.value)
+                                this.onChange("name", e.target.value)
                               }
                               onFocus={e =>
                                 this.setState({ fullNameFocus: true })
@@ -338,6 +347,7 @@ class RegisterPage extends React.Component {
                               onBlur={e =>
                                 this.setState({ fullNameFocus: false })
                               }
+                              disabled={this.state.interruptAllAction}
                             />
                           </InputGroup>
                           <InputGroup
@@ -352,15 +362,12 @@ class RegisterPage extends React.Component {
                             </InputGroupAddon>
                             <Input
                               placeholder="Email"
-                              value={this.state.formdata.emailRegister}
+                              value={formdata.email}
                               onKeyPress={e =>
-                                e.key === "Enter" && this.validator()
+                                e.key === "Enter" && this.validator(formdata)
                               }
                               onChange={e =>
-                                this.changeFormData(
-                                  "emailRegister",
-                                  e.target.value
-                                )
+                                this.onChange("email", e.target.value)
                               }
                               type="text"
                               onFocus={e =>
@@ -369,6 +376,7 @@ class RegisterPage extends React.Component {
                               onBlur={e =>
                                 this.setState({ emailRegisterFocus: false })
                               }
+                              disabled={this.state.interruptAllAction}
                             />
                           </InputGroup>
                           <InputGroup
@@ -384,15 +392,12 @@ class RegisterPage extends React.Component {
                             </InputGroupAddon>
                             <Input
                               placeholder="Password"
-                              value={this.state.formdata.password}
+                              value={formdata.password}
                               onKeyPress={e =>
-                                e.key === "Enter" && this.validator()
+                                e.key === "Enter" && this.validator(formdata)
                               }
                               onChange={e =>
-                                this.changeFormData(
-                                  "passwordRegister",
-                                  e.target.value
-                                )
+                                this.onChange("password", e.target.value)
                               }
                               onFocus={e =>
                                 this.setState({ passwordRegisterFocus: true })
@@ -400,18 +405,17 @@ class RegisterPage extends React.Component {
                               onBlur={e =>
                                 this.setState({ passwordRegisterFocus: false })
                               }
+                              disabled={this.state.interruptAllAction}
                             />
                           </InputGroup>
                           <FormGroup check className="text-left">
                             <Label check>
                               <Input
-                                checked={this.state.formdata.isAgree}
+                                checked={formdata.isAggree}
                                 onChange={() => {
-                                  this.changeFormData(
-                                    "isAgree",
-                                    !this.state.formdata.isAgree
-                                  );
+                                  this.onChange("isAggree", !formdata.isAggree);
                                 }}
+                                disabled={this.state.interruptAllAction}
                                 type="checkbox"
                               />
                               <span className="form-check-sign" />
@@ -420,18 +424,24 @@ class RegisterPage extends React.Component {
                             </Label>
                           </FormGroup>
                         </Form>
-                      </CardBody>
-                      <CardFooter>
+                        {this.state.interruptAllAction && (
+                          <div className="text-center mb-3">
+                            <div className="lds-dual-ring" />
+                            <br />
+                            <small>Sedang memproses data</small>
+                          </div>
+                        )}
                         {this.state.warning.status && (
                           <Alert color="danger">
                             {this.state.warning.message}
                           </Alert>
                         )}
                         <Button
-                          onClick={this.validator}
+                          onClick={() => this.validator(formdata)}
                           className="mr-5"
                           color="info"
                           size="lg"
+                          disabled={this.state.interruptAllAction}
                         >
                           Daftar
                         </Button>
@@ -441,6 +451,7 @@ class RegisterPage extends React.Component {
                           href="https://www.facebook.com/creativetim"
                           id="tooltip23045080110"
                           target="_blank"
+                          disabled={this.state.interruptAllAction}
                         >
                           <i className="fab fa-facebook-square" />
                         </Button>
@@ -456,6 +467,7 @@ class RegisterPage extends React.Component {
                           href="https://www.facebook.com/creativetim"
                           id="tooltip230450801101"
                           target="_blank"
+                          disabled={this.state.interruptAllAction}
                         >
                           <i className="fab fa-google-plus" />
                         </Button>
@@ -465,7 +477,7 @@ class RegisterPage extends React.Component {
                         >
                           Daftar dengan Gmail
                         </UncontrolledTooltip>
-                      </CardFooter>
+                      </CardBody>
                     </Card>
                   </Col>
                 </Row>
