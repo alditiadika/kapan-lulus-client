@@ -5,7 +5,7 @@ import configAPI from "../../config/config-api";
 
 export const login = (dispatch, userData, refreshSetter, callback) => {
   axios({
-    url: `${configAPI.devUrl}${configAPI.endpoint.login}`,
+    url: `${configAPI.url}${configAPI.endpoint.login}`,
     method: "post",
     headers: {
       "Content-Type": "application/json"
@@ -50,7 +50,7 @@ export const login = (dispatch, userData, refreshSetter, callback) => {
 export const onFirstRegister = (dispatch, userData, nextAction) => {
   if (userData.verificationCode === "") {
     axios({
-      url: `${configAPI.devUrl}${configAPI.endpoint.mailSender}`,
+      url: `${configAPI.url}${configAPI.endpoint.mailSender}`,
       method: "post",
       headers: {
         "Content-Type": "application/json"
@@ -88,7 +88,7 @@ export const onFirstRegister = (dispatch, userData, nextAction) => {
 const sendData = (dispatch, userData) => {
   console.log("send data to server");
   axios({
-    url: `${configAPI.devUrl}${configAPI.endpoint.register}`,
+    url: `${configAPI.url}${configAPI.endpoint.register}`,
     method: "post",
     headers: {
       "Content-Type": "application/json"
