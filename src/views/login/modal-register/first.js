@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import classnames from "classnames";
 import {
   Button,
@@ -17,48 +18,34 @@ import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 
+import { mapStateToProps, mapDispatchToProps } from "../actions";
 import { isEmpty } from "../../../validator";
 import data from "./data-dummy.js";
 
-export default class extends React.Component {
+class FirstModal extends React.Component {
   state = {
     emailFocus: false,
     passwordFocus: false,
-    data: data,
-    formdata: {
-      university: "",
-      yearOfEntry: "",
-      department: "",
-      cardID: { name: "" },
-      studentID: ""
-    },
     warning: { status: false, message: "" }
   };
-  changeFormdata = (event, mode = false) => {
-    this.setState({ warning: { status: false } });
-    if (mode) {
-      this.setState({
-        formdata: {
-          ...this.state.formdata,
-          studentID: event.target.value.toUpperCase()
-        }
-      });
+
+  changeFormdata = (name, value, file = null) => {
+    if (file !== null) {
+      this.setState({ warning: { status: false } });
+      this.props.onChange({ name: name, value: value, file: file });
     } else {
-      this.setState({
-        formdata: {
-          ...this.state.formdata,
-          [event.target.name]: event.target.value
-        }
-      });
+      this.setState({ warning: { status: false } });
+      this.props.onChange({ name: name, value: value });
     }
   };
-  validator = () => {
-    let university = isEmpty(this.state.formdata.university);
-    let yearOfEntry = isEmpty(this.state.formdata.yearOfEntry);
-    let department = isEmpty(this.state.formdata.department);
-    let cardID = isEmpty(this.state.formdata.cardID.name);
-    let studentID = isEmpty(this.state.formdata.studentID);
-    if (university || yearOfEntry || department || cardID || studentID) {
+
+  validator = formdata => {
+    let university = isEmpty(formdata.university);
+    let yearOfEntry = isEmpty(formdata.yearOfEntry);
+    let department = isEmpty(formdata.department);
+    let cardPhoto = isEmpty(formdata.cardPhoto.name);
+    let studentID = isEmpty(formdata.studentID);
+    if (university || yearOfEntry || department || cardPhoto || studentID) {
       this.setState({
         warning: { status: true, message: "Harap isi semua data" }
       });
@@ -66,7 +53,9 @@ export default class extends React.Component {
       this.props.next();
     }
   };
+
   render() {
+    const formdata = this.props.biodataReducer;
     return (
       <Modal isOpen={true} modalClassName="modal-black">
         <div
@@ -90,13 +79,12 @@ export default class extends React.Component {
               </InputLabel>
               <Select
                 style={{ width: "100%", color: "white" }}
-                value={this.state.formdata.university}
-                onChange={event => this.changeFormdata(event)}
-                inputProps={{
-                  name: "university"
-                }}
+                value={formdata.university}
+                onChange={event =>
+                  this.changeFormdata("university", event.target.value)
+                }
               >
-                {this.state.data.university.map(item => (
+                {data.university.map(item => (
                   <MenuItem key={Math.random()} value={item.label}>
                     {item.label}
                   </MenuItem>
@@ -109,13 +97,12 @@ export default class extends React.Component {
               </InputLabel>
               <Select
                 style={{ width: "100%", color: "white" }}
-                value={this.state.formdata.yearOfEntry}
-                onChange={event => this.changeFormdata(event)}
-                inputProps={{
-                  name: "yearOfEntry"
-                }}
+                value={formdata.yearOfEntry}
+                onChange={event =>
+                  this.changeFormdata("yearOfEntry", event.target.value)
+                }
               >
-                {this.state.data.yearOfEntry.map(item => (
+                {data.yearOfEntry.map(item => (
                   <MenuItem key={Math.random()} value={item.label}>
                     {item.label}
                   </MenuItem>
@@ -128,13 +115,12 @@ export default class extends React.Component {
               </InputLabel>
               <Select
                 style={{ width: "100%", color: "white" }}
-                value={this.state.formdata.department}
-                onChange={event => this.changeFormdata(event)}
-                inputProps={{
-                  name: "department"
-                }}
+                value={formdata.department}
+                onChange={event =>
+                  this.changeFormdata("department", event.target.value)
+                }
               >
-                {this.state.data.department.map(item => (
+                {data.department.map(item => (
                   <MenuItem key={Math.random()} value={item.label}>
                     {item.label}
                   </MenuItem>
@@ -155,9 +141,16 @@ export default class extends React.Component {
                 <Input
                   placeholder="ID Mahasiswa"
                   style={{ color: "white" }}
-                  value={this.state.formdata.studentID}
-                  onChange={e => this.changeFormdata(e, true)}
-                  name="studentID"
+                  value={formdata.studentID}
+                  onChange={event =>
+                    this.changeFormdata(
+                      "studentID",
+                      event.target.value.toUpperCase()
+                    )
+                  }
+                  onKeyPress={event =>
+                    event.key === "Enter" && this.validator(formdata)
+                  }
                   onFocus={e => this.setState({ idMahasiswa: true })}
                   onBlur={e => this.setState({ idMahasiswa: false })}
                 />
@@ -178,26 +171,21 @@ export default class extends React.Component {
                     <input
                       type="file"
                       onChange={e =>
-                        this.changeFormdata({
-                          ...e,
-                          target: {
-                            ...e.target,
-                            name: "cardID",
-                            value: e.target.files[0]
-                          }
-                        })
+                        this.changeFormdata(
+                          "cardPhoto",
+                          e.target.files[0],
+                          e.target.files
+                        )
                       }
                     />
                   </Button>
                 </Col>
                 <Col>
-                  <Input
-                    style={{ color: "white" }}
-                    placeholder="File Not Chosen"
-                    value={this.state.formdata.cardID.name}
-                    readOnly
-                    className="mt-2"
-                  />
+                  <div className="mt-3">
+                    {formdata.cardPhoto.name === ""
+                      ? "No File Chosen"
+                      : formdata.cardPhoto.name}
+                  </div>
                 </Col>
               </Row>
               <FormGroup />
@@ -217,7 +205,7 @@ export default class extends React.Component {
                 Batal
               </Button>
               <Button
-                onClick={this.validator}
+                onClick={() => this.validator(formdata)}
                 className="my-4"
                 color="info"
                 type="button"
@@ -231,3 +219,7 @@ export default class extends React.Component {
     );
   }
 }
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FirstModal);

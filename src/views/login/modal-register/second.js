@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import classnames from "classnames";
 import {
   Button,
@@ -13,8 +14,8 @@ import {
 } from "reactstrap";
 
 import { isEmpty } from "../../../validator";
-
-export default class extends React.Component {
+import { mapStateToProps } from "../actions";
+class SecondModal extends React.Component {
   state = {
     emailFocus: false,
     passwordFocus: false,
@@ -27,6 +28,15 @@ export default class extends React.Component {
         warning: {
           status: true,
           message: "Harap isi semua data"
+        }
+      });
+    } else if (
+      this.state.verificationCode !== this.props.biodataReducer.verificationCode
+    ) {
+      this.setState({
+        warning: {
+          status: true,
+          message: "Kode Verifikasi tidak cocok"
         }
       });
     } else {
@@ -43,7 +53,7 @@ export default class extends React.Component {
           <div className="text-muted text-center ml-auto mr-auto">
             <h4 className="mb-0">Verifikasi Keamanan</h4>
             <small style={{ color: "white" }}>
-              Kami akan mengirimkan kode verifikasi melalui email anda
+              Kami telah mengirimkan kode verifikasi melalui email anda
               <br />
               Masukkan kode tersebut untuk konfirmasi bahwa anda dapat mengakses
               email
@@ -69,9 +79,11 @@ export default class extends React.Component {
                   value={this.state.verificationCode}
                   onChange={e =>
                     this.setState({
-                      verificationCode: e.target.value.toUpperCase()
+                      verificationCode: e.target.value,
+                      warning: { status: false }
                     })
                   }
+                  onKeyPress={e => e.key === "Enter" && this.validator()}
                   onFocus={e => this.setState({ passwordFocus: true })}
                   onBlur={e => this.setState({ passwordFocus: false })}
                 />
@@ -106,3 +118,5 @@ export default class extends React.Component {
     );
   }
 }
+
+export default connect(mapStateToProps)(SecondModal);

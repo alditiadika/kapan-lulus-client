@@ -1,7 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Modal } from "reactstrap";
 
-export default class extends React.Component {
+import { mapStateToProps, mapDispatchToProps } from "../actions";
+class EndModal extends React.Component {
   state = {
     indexQuote: 0
   };
@@ -20,6 +22,12 @@ export default class extends React.Component {
           className="modal-header justify-content-center"
         >
           <div className="text-muted text-center ml-auto mr-auto">
+            <img
+              src={require("../../../assets/img/logo.1.png")}
+              alt="..."
+              className="mr-1"
+              style={{ width: "20px", height: "20px" }}
+            />
             <h4 className="mb-0">KAPAN• Lulus</h4>
           </div>
         </div>
@@ -30,13 +38,15 @@ export default class extends React.Component {
             <p className="text-right">{quote[this.state.indexQuote].name}</p>
           </blockquote>
         </div>
-        <div className="modal-body text-center">
-          <div className="lds-dual-ring" />
-          <div className="text-center">
-            Harap Tunggu, data anda sedang di proses
+        {this.props.biodataReducer.isLoading && (
+          <div className="modal-body text-center">
+            <div className="lds-dual-ring" />
+            <div className="text-center">
+              Harap Tunggu, data anda sedang di proses
+            </div>
+            <br />
           </div>
-          <br />
-        </div>
+        )}
       </Modal>
     );
   }
@@ -50,5 +60,30 @@ const quote = [
     text:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante",
     name: "Randika alditia"
+  },
+  {
+    text:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante",
+    name: "Muhammad Sandy"
+  },
+  {
+    text:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante",
+    name: "Deni Dahlan"
+  },
+  {
+    text:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante",
+    name: "Salahuddin Perdana"
+  },
+  {
+    text:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante",
+    name: "Royyan Faizin"
   }
 ];
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EndModal);

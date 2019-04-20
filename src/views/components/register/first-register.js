@@ -1,7 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Card, CardBody, Row, Col, Button, Container } from "reactstrap";
 
-export default class FirstRegister extends React.Component {
+import { mapStateToProps } from "../dashboard/actions";
+class FirstRegister extends React.Component {
   state = {
     isProfileComplete: false,
     isTeacherFound: false,
@@ -23,8 +25,8 @@ export default class FirstRegister extends React.Component {
       <Container style={{ marginTop: "100px" }}>
         <Row style={{ marginBottom: "20px" }}>
           <Col>
-            Hai Administrator selamat datang, mulai gunakan KAPAN• Lulus dengan
-            3 langkah mudah:
+            Hai {this.props.auth.user.username} selamat datang, mulai gunakan
+            KAPAN• Lulus dengan 3 langkah mudah:
           </Col>
         </Row>
         <Row>
@@ -136,3 +138,5 @@ export default class FirstRegister extends React.Component {
     );
   }
 }
+
+export default connect(mapStateToProps)(FirstRegister);

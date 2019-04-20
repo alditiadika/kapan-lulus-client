@@ -1,24 +1,11 @@
 import React from "react";
-import {
-  Button,
-  FormGroup,
-  Modal,
-  Form,
-  Input,
-  Col,
-  Row,
-  Alert
-} from "reactstrap";
+import { connect } from "react-redux";
+import { Button, FormGroup, Modal, Form, Col, Row } from "reactstrap";
 
-export default class extends React.Component {
-  state = {
-    profilePhoto: { name: "" },
-    warning: { status: false, message: "" }
-  };
-  validator = () => {
-    this.props.next();
-  };
+import { mapStateToProps, mapDispatchToProps } from "../actions";
+class ThirdModal extends React.Component {
   render() {
+    const formdata = this.props.biodataReducer;
     return (
       <Modal isOpen={true} modalClassName="modal-black">
         <div
@@ -50,30 +37,24 @@ export default class extends React.Component {
                     <input
                       type="file"
                       onChange={e =>
-                        this.setState({
-                          profilePhoto: e.target.files[0]
+                        this.props.onChange({
+                          name: "profilePhoto",
+                          value: e.target.files[0]
                         })
                       }
                     />
                   </Button>
                 </Col>
                 <Col>
-                  <Input
-                    style={{ color: "white" }}
-                    placeholder="File Not Chosen"
-                    value={this.state.profilePhoto.name}
-                    readOnly
-                    className="mt-2"
-                  />
+                  <div className="mt-3">
+                    {formdata.profilePhoto.name === ""
+                      ? "No File Chosen"
+                      : formdata.profilePhoto.name}
+                  </div>
                 </Col>
               </Row>
               <FormGroup />
             </FormGroup>
-            {this.state.warning.status && (
-              <Alert style={{ marginTop: "20px" }} color="danger">
-                {this.state.warning.message}
-              </Alert>
-            )}
             <div className="text-right">
               <Button
                 onClick={this.props.before}
@@ -84,7 +65,7 @@ export default class extends React.Component {
                 Sebelumnya
               </Button>
               <Button
-                onClick={this.validator}
+                onClick={this.props.next}
                 className="my-4"
                 color="info"
                 type="button"
@@ -98,3 +79,7 @@ export default class extends React.Component {
     );
   }
 }
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ThirdModal);

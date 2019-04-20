@@ -5,5 +5,6 @@ export const mapDispatchToProps = dispatch => ({
   secondClick: payload => dispatch({ type: type.seconButton, payload })
 });
 export const mapStateToProps = state => ({
-  formData: state.biodataReducer
+  formData: state.biodataReducer,
+  auth: state.auth
 });
